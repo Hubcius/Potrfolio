@@ -1,0 +1,29 @@
+#include<iostream>
+#include<vector>
+#include<tuple>
+using namespace std;
+int main() {
+	freopen("bcount.in", "r", stdin);
+	freopen("bcount.out", "w", stdout);
+	int n,m;
+	cin >> n >> m;
+	vector<tuple<int,int,int>> tab(n+1);
+	vector<pair<int,int>> spr(m);
+	tab[0] = make_tuple(0, 0, 0);
+	for (int i = 1; i <= n; i++) {
+		int a;
+		tab[i] = make_tuple(get<0>(tab[i-1]), get<1>(tab[i - 1]), get<2>(tab[i - 1]));
+		cin >> a;
+		if (a == 1)
+			get<0>(tab[i])++;
+		else if (a == 2)
+			get<1>(tab[i])++;
+		else
+			get<2>(tab[i])++;
+	}
+	for (int i = 0; i < m; i++) {
+		int a, b;
+		cin >> a >> b;
+		cout << get<0>(tab[b]) - get<0>(tab[a-1])<<" "<< get<1>(tab[b]) - get<1>(tab[a - 1])<<" "<< get<2>(tab[b]) - get<2>(tab[a - 1])<<"\n";
+	}
+}
