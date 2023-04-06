@@ -1,0 +1,59 @@
+#include <iostream>
+#include<vector>
+#include<math.h>
+#include<algorithm>
+#include <fstream>
+#include<string>
+#include<climits>
+using namespace std;
+vector <long long int> x;
+vector<long long int> y;
+vector<vector<long long int>> pol;
+vector<int> vis(100000);
+long long int minx = INT_MAX, miny = INT_MAX;
+long long int maxx = INT_MIN, maxy = INT_MIN;
+void dfs(int node) {
+	if (vis[node]) return ;
+
+	vis[node] = true;
+	minx = min(minx, x[node]);
+	miny = min(miny, y[node]);
+	maxx = max(maxx, x[node]);
+	maxy = max(maxy, y[node]);
+	for (int u : pol[node]) {
+		if (!vis[u]) dfs(u);
+	}
+}
+int main() {
+	ios_base::sync_with_stdio(0);
+	cin.tie(0);
+	cout.tie(0);
+	freopen("fenceplan.in", "r", stdin);
+	freopen("fenceplan.out", "w", stdout);
+	int n, m;
+	cin >> n >> m;
+	for (int i = 0; i < n; i++) {
+		int a, b;
+		cin >> a >> b;
+		x.push_back(a);
+		y.push_back(b);
+	}
+	pol.resize(n);
+	for (int i = 0; i < m; i++) {
+		int a, b;
+		cin >> a >> b;
+		pol[a-1].push_back(b-1);
+		pol[b - 1].push_back(a-1);
+	}
+	long long int wynmin=10000000000000;
+	for (int i = 0; i < n; i++) {
+		if (vis[i] == 0) {
+			minx = INT_MAX, miny = INT_MAX;
+			maxx = INT_MIN, maxy = INT_MIN;
+			dfs(i);
+			long long wyn = (maxx - minx) * 2 + (maxy - miny) * 2;
+			wynmin=min(wyn, wynmin);
+		}
+	}
+	cout << wynmin;
+}
