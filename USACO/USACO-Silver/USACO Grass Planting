@@ -1,0 +1,32 @@
+#include <iostream>
+#include<vector>
+#include<math.h>
+#include<algorithm>
+#include <fstream>
+#include<string>
+#include<climits>
+using namespace std;
+int nodes = 0;
+int main() {
+	ios_base::sync_with_stdio(0);
+	cin.tie(0);
+	cout.tie(0);
+	freopen("planting.in", "r", stdin);
+	freopen("planting.out", "w", stdout);
+	int n;
+	cin >> n;
+	vector<int> wyn(n);
+	for (int i = 0; i < n-1; i++) {
+		int a, b;
+		cin >> a >> b;
+		a--;
+		b--;
+		wyn[a]++;
+		wyn[b]++;
+	}
+	int maxresult = 0;
+	for (int i = 0; i < n-1; i++) {
+		maxresult = max(wyn[i], maxresult);
+	}
+	cout << maxresult + 1;
+}
