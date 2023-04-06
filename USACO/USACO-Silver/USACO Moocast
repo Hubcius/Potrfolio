@@ -1,0 +1,47 @@
+#include <iostream>
+#include<vector>
+#include<math.h>
+#include<algorithm>
+#include <fstream>
+#include<string>
+using namespace std;
+vector<int> x(25000);
+vector<int> y(25000);
+vector<int>zas(25000);
+vector<bool>odw(25000);
+int check(int z, int n, int i) {
+	int wyn = 0;
+	for (int g = 0; g < n; g++) {
+		double odl = sqrt(pow(x[i] - x[g], 2) + pow(y[i] - y[g], 2));
+		if (odl <= z) {
+			if (odw[g]!=1) {
+				wyn++;
+				odw[g] = 1;
+				wyn += check(zas[g], n, g);
+			}
+		}
+
+	}
+	return wyn;
+}
+int main() {
+	ios_base::sync_with_stdio(0);
+	cin.tie(0);
+	cout.tie(0);
+	freopen("moocast.in", "r", stdin);
+	freopen("moocast.out", "w", stdout);
+	int n;
+	cin >> n;
+	for (int i = 0;i < n; i++) {
+		cin >> x[i] >> y[i] >> zas[i];
+	}
+	int kon = 0;
+	for (int i = 0; i < n; i++) {
+		fill(odw.begin(), odw.end(), 0);
+		int wyn = 0;
+		int z = zas[i];
+		wyn += check(z, n, i);
+		kon=max(kon, wyn);
+	}
+	cout << kon;
+}
