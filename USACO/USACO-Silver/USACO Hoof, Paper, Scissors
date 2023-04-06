@@ -1,0 +1,49 @@
+#include <iostream>
+#include<vector>
+#include<math.h>
+#include<algorithm>
+#include <fstream>
+#include<string>
+#include<climits>
+#include<tuple>
+using namespace std;
+int main() {
+	ios_base::sync_with_stdio(0);
+	cin.tie(0);
+	cout.tie(0);
+	freopen("hps.in", "r", stdin);
+	freopen("hps.out", "w", stdout);
+	int n;
+	cin >> n;
+	vector<tuple<int, int, int>> tab(n+1);
+	int H = 0, P = 0, S = 0;
+	for (int i = 1; i <= n; i++) {
+		get<0>(tab[i])= get<0>(tab[i-1]);
+		get<1>(tab[i]) = get<1>(tab[i - 1]);
+		get<2>(tab[i]) = get<2>(tab[i - 1]);
+		char lit;
+		cin >> lit;
+		if (lit == 'H') {
+			H++;
+			get<0>(tab[i])++;
+		}
+		else if (lit == 'P') {
+			P++;
+			get<1>(tab[i])++;
+		}
+		else{
+			S++;
+			get<2>(tab[i])++;
+		}
+	}
+	int wyn = 0;
+	for (int i = 1; i <= n; i++) {
+		int prze, po;
+		prze = max(get<0>(tab[i]), max(get<1>(tab[i]), get<2>(tab[i])));
+		po = max(H-get<0>(tab[i]), max(P-get<1>(tab[i]), S-get<2>(tab[i])));
+		wyn=max(wyn, prze + po);
+	}
+	cout << wyn;
+
+
+}
