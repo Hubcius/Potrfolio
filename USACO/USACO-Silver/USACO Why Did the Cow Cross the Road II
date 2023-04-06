@@ -1,0 +1,35 @@
+#include <iostream>
+#include<vector>
+#include<math.h>
+#include<algorithm>
+#include <fstream>
+#include<string>
+#include<climits>
+#include<tuple>
+using namespace std;
+int main() {
+	ios_base::sync_with_stdio(0);
+	cin.tie(0);
+	cout.tie(0);
+	freopen("maxcross.in", "r", stdin);
+	freopen("maxcross.out", "w", stdout);
+	int n, k, b;
+	cin >> n >> k >> b;
+	vector<int>tab(n);
+	vector<int>pref(n);
+	for (int i = 0; i < b; i++) {
+		int a;
+		cin >> a;
+		a--;
+		tab[a]++;
+	}
+	int w = 0;
+	for (int i= 0; i < n; i++) {
+		pref[i] = tab[i]+w;
+		w += tab[i];
+	}
+	w = 20000000;
+	for (int i = 0; i < n - k; i++)
+		w = min(w, pref[i + k] - pref[i]);
+	cout << w;
+}
