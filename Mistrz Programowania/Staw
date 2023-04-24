@@ -1,0 +1,84 @@
+#include <iostream>
+#include <vector>
+
+using namespace std;
+
+int N = 3;
+int M = 1000000;
+
+int grid[3][1000000] = {};
+int gridtrue[3][1000000] = {};
+
+bool visited[3][1000000] = { 0 };
+
+int dx[4] = { 0, 0, 1, -1 };
+int dy[4] = { 1, -1, 0, 0 };
+
+void dfs(int i, int j) {
+    visited[i][j] = true;
+    for (int k = 0; k < 4; k++) {
+        int ni = i + dx[k];
+        int nj = j + dy[k];
+        if (ni >= 0 && ni < N && nj >= 0 && nj < M && grid[ni][nj] == 1 && !visited[ni][nj]) {
+            dfs(ni, nj);
+        }
+    }
+}
+
+int main() {
+    ios_base::sync_with_stdio(0);
+    cin.tie(0);
+    cout.tie(0);
+    int n;
+    cin >> n;
+    for (int z = 0; z < 3; z++) {
+        string o;
+        cin >> o;
+        M = o.length();
+        for (int i = 0; i < n; i++) {
+            grid[z][i] = o[i] - 48;
+        }
+    }
+    for (int z = 0; z < 3; z++) {
+        for (int i = 0; i < n; i++) {
+            gridtrue[z][i] = grid[z][i];
+        }
+    }
+    int m;
+    cin >> m;
+    for (int r = 0; r < m; r++) {
+        int g, l;
+        cin >> g >> l;
+        for (int h = 0; h < 3; h++) {
+            for (int t = 0; t < g - 1; t++) {
+                grid[h][t] = 0;
+            }
+        }
+        for (int h = 0; h < 3; h++) {
+            for (int t = l; t < n; t++) {
+                grid[h][t] = 0;
+            }
+        }
+        int count = 0;
+        for (int i = 0; i < N; i++) {
+            for (int j = 0; j < M; j++) {
+                if (grid[i][j] == 1 && !visited[i][j]) {
+                    dfs(i, j);
+                    count++;
+                }
+            }
+        }
+        cout << count << "\n";
+        for (int b = 0; b < N; b++) {
+            for (int v = 0; v < M; v++) {
+                visited[b][v] = false;
+            }
+        }
+        for (int z = 0; z < 3; z++) {
+            for (int i = 0; i < n; i++) {
+                grid[z][i] = gridtrue[z][i];
+            }
+        }
+    }
+    return 0;
+}
