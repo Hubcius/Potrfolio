@@ -1,0 +1,12 @@
+#include <iostream>
+using namespace std;
+int main() {
+	int a, b;
+	cin >> a >> b;
+	int o = b / a;
+	int y = o;
+	while(b>=o){
+		o *= y;
+	}
+	cout << o;
+}
