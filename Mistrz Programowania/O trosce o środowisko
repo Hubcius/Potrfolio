@@ -1,0 +1,126 @@
+/*
+* #include<iostream>
+#include<string>
+using namespace std;
+int main() {
+	string ciag;
+	cin >> ciag;
+	int n;
+	cin >> n;
+	for (int i = 0; i < n; i++) {
+		string wyraz;
+		cin >> wyraz;
+		int y = ciag.length();
+		punkt:;
+		for (int z = 0; z < y; z++) {
+			if (ciag[z] == wyraz[0]) {
+				wyraz.erase(0, 1);
+				goto punkt;
+			}
+		}
+		if (wyraz == "") {
+			cout << "TAK";
+		}
+		else {
+			cout << "NIE";
+		}
+	}
+}
+
+#include <iostream>
+#include <string>
+
+int main() {
+    std::ios_base::sync_with_stdio(0);
+    std::cin.tie(0);
+    std::cout.tie(0);
+
+    std::string str1, str2;
+    std::cin >> str1;
+    long long int n;
+    std::cin >> n;
+
+    str1.reserve(100000); 
+    str2.reserve(100000); 
+    for (long long int i = 0; i < n; i++) {
+        std::cin >> str2;
+        int z = 0, j = 0;
+        while (z < str1.length() && j < str2.length()) {
+            if (str1[z] == str2[j]) {
+                j++;
+            }
+            z++;
+        }
+        if (j == str2.length()) {
+            std::cout << "TAK\n";
+        }
+        else {
+            std::cout << "NIE\n";
+        }
+    }
+    return 0;
+}
+*/
+#include <iostream>
+#include <string>
+#include <unordered_map>
+
+using namespace std;
+
+int main() {
+    ios_base::sync_with_stdio(0);
+    cin.tie(0);
+    cout.tie(0);
+    string newspaper;
+    int n;
+    unordered_map<char, int> freq_newspaper;
+
+    cin >> newspaper >> n;
+
+    for (char c : newspaper) {
+        freq_newspaper[c]++;
+    }
+
+    while (n--) {
+        string proposal;
+        bool can_obtain = true;
+        unordered_map<char, int> freq_proposal;
+
+        cin >> proposal;
+        for (char c : proposal) {
+            freq_proposal[c]++;
+        }
+        for (auto it : freq_proposal) {
+            char c = it.first;
+            int count = it.second;
+
+            if (freq_newspaper[c] < count) {
+                can_obtain = false;
+                break;
+            }
+        }
+
+        if (can_obtain) {
+            int i = 0;
+            for (char c : proposal) {
+                while (i < newspaper.size() && newspaper[i] != c) {
+                    i++;
+                }
+                if (i == newspaper.size()) {
+                    can_obtain = false;
+                    break;
+                }
+                i++;
+            }
+        }
+
+        if (can_obtain) {
+            cout << "TAK" << endl;
+        }
+        else {
+            cout << "NIE" << endl;
+        }
+    }
+
+    return 0;
+}
