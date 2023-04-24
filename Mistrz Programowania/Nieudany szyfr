@@ -1,0 +1,40 @@
+#include <iostream>
+#include <string>
+#include <vector>
+
+using namespace std;
+
+const int MOD = 1000000007;
+
+vector<string> dictionary = {
+    "", "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m",
+    "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"
+};
+
+int count_words(string code) {
+    int n = code.length();
+    vector<long long> dp(n + 1);
+    dp[0] = 1;
+    for (int i = 1; i <= n; i++) {
+        int x = code[i - 1] - '0';
+        if (x > 0) {
+            dp[i] = dp[i - 1];
+        }
+        if (i > 1) {
+            x += (code[i - 2] - '0') * 10;
+            if (x >= 10 && x <= 26) {
+                dp[i] += dp[i - 2];
+            }
+        }
+        dp[i] %= MOD;
+    }
+    return dp[n];
+}
+
+int main() {
+    string code;
+    cin >> code;
+    int count = count_words(code);
+    cout << count << endl;
+    return 0;
+}
