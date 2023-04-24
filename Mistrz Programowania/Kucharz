@@ -1,0 +1,41 @@
+#include <iostream>
+using namespace std;
+/*
+int main() {
+    int n;
+    cin >> n;
+    int waga;
+    cin >> waga;
+    cout << waga << " ";
+    for (int i = 1; i < n; i++) {
+        int waga1;
+        cin >> waga1;
+        cout << waga1 - waga << " ";
+        waga = waga1;
+    }
+    return 0;
+}
+*/
+
+
+#include <iostream>
+#include <vector>
+#include <stdio.h>    
+using namespace std;
+
+int main() {
+    int n;
+    scanf("%d", &n);
+    vector<int> masa;
+    for (int i = 0; i < n; i++) {
+        int waga;
+        scanf("%d", &waga);
+        masa.push_back(waga);
+    }
+    printf("%d", masa[0]);
+    for (int i = 1; i < n; i++) {
+        printf(" ");
+        printf("%d", masa[i] - masa[i - 1]);
+    }
+    return 0;
+}
