@@ -1,0 +1,40 @@
+#include <iostream>
+#include <unordered_map>
+#include <cmath>
+using namespace std;
+
+int main() {
+    ios_base::sync_with_stdio(0);
+    cin.tie(0);
+    cout.tie(0);
+    int f;
+    cin >> f;
+    unordered_map<int, int> memo;
+    for (int i = 0; i < f; i++)
+    {
+        int x, y, z;
+        cin >> x;
+        int result;
+        if (memo.count(x) > 0) {
+            result = memo[x];
+        }
+        else {
+            int str1 = x + 1;
+            int str2 = x + 1;
+            int sqrt_x = sqrt(x);
+            for (y = 1; y <= sqrt_x; y++) {
+                if (x % y == 0) {
+                    z = x / y;
+                    if (y + z < str1 + str2) {
+                        str1 = y;
+                        str2 = z;
+                    }
+                }
+            }
+            result = (str1 + 2) * (str2 + 2) - (str1 * str2);
+            memo[x] = result;
+        }
+        cout << result << "\n";
+    }
+    return 0;
+}
