@@ -1,0 +1,51 @@
+#include <iostream>
+#include<vector>
+#include<algorithm>
+using namespace std;
+
+const int MAXN = 1e5 + 5;
+int n, k, T;
+int infected[MAXN], parent[MAXN];
+vector<int> graph[MAXN];
+bool visited[MAXN];
+
+int dfs(int u, int parent, int distFromInfected) {
+    visited[u] = true;
+    int numSavedVertices = 0;
+    if (distFromInfected <= T) {
+        numSavedVertices++;
+    }
+    for (int v : graph[u]) {
+        if (v == parent) continue;
+        int subtreeSize = dfs(v, u, distFromInfected + 2);
+        numSavedVertices += subtreeSize;
+    }
+    if (binary_search(infected + 1, infected + k + 1, u) && numSavedVertices > 0) {
+        return numSavedVertices - 1;
+    }
+    return numSavedVertices;
+}
+
+int main() {
+    cin >> n >> k >> T;
+    for (int i = 1; i <= k; i++) {
+        cin >> infected[i];
+    }
+    sort(infected + 1, infected + k + 1);
+    for (int i = 1; i < n; i++) {
+        int u, v;
+        cin >> u >> v;
+        graph[u].push_back(v);
+        graph[v].push_back(u);
+    }
+    int maxSavedVertices = dfs(1, -1, 0);
+    for (int i = 1; i <= k; i++) {
+        if (infected[i] == 1) continue;
+        int numSavedVertices = dfs(1, infected[i], 1);
+        if (numSavedVertices > maxSavedVertices) {
+            maxSavedVertices = numSavedVertices;
+        }
+    }
+    cout << maxSavedVertices << endl;
+    return 0;
+}
