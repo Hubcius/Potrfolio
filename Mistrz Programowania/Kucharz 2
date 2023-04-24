@@ -1,0 +1,27 @@
+#include <iostream>
+using namespace std;
+int main() {
+	int n;
+	cin >> n;
+	int* tablica = new int[n];
+	for (int i = 0; i < n; i++) {
+		scanf_s("%d", &tablica[i]);
+	}
+	cin >> n;
+	for (int i = 0; i < n; i++) {
+		int a, b, sum = 0;
+		scanf_s("%d", &a);
+		scanf_s("%d", &b);
+		a -= 1;
+		b -= 1;
+		if (a == 0) {
+			sum += tablica[0];
+		}
+		else {
+			sum += tablica[a] - tablica[a-1];
+		}
+		sum += tablica[b] - tablica[a];
+		printf("%d", sum);
+		cout << "\n";
+	}
+}
