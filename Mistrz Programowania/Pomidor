@@ -1,0 +1,123 @@
+/*
+* #include <iostream>
+#include<algorithm>
+#include<string>
+#include <string.h>
+using namespace std;
+long long int tab[10000000] = {};
+long long int tablicz[1000000] = {};
+long long int tabdlu[1000000] = {};
+int main() {
+	ios_base::sync_with_stdio(0);
+	cin.tie(0);
+	cout.tie(0);
+	long long int n,z,s;
+	string wyraz="",autkor;
+	cin >> n;
+	string czescwyr;
+	cin >> czescwyr;
+	wyraz += czescwyr;
+	tab[0] = czescwyr.length();
+	for (long long int i = 1; i < n; i++) {
+		string czescwyr;
+		cin >> czescwyr;
+		wyraz += czescwyr;
+		tab[i] = czescwyr.length()+tab[i-1];
+	}
+	cin >> z;
+	for (long long int i = 0; i < z; i++) {
+		tablicz[10000] = {};
+		s = 0;
+		cin >> autkor;
+		string h;
+		h = wyraz.substr(0, autkor.length());
+		if (h == autkor) {
+			tablicz[s] = 0;
+			s++;
+		}
+		for (long long int y = 0; y < n; y++) {
+			long long int k;
+			k = autkor.length();
+			if (tab[y+1]-tab[y] >= k) {
+				string h;
+				h = wyraz.substr(tab[y], k);
+				if (h == autkor) {
+					tablicz[s]=y;
+					s++;
+				}
+			}
+		}
+		if (s == 0) {
+			cout << "Pomidor"<<"\n";
+		}
+		else if(s==1) {
+			long long int g, l;
+			if (tablicz[s-1] - 1 == -1) {
+				g=0;
+				l = tab[tablicz[0]];
+			}
+			else {
+				g = tab[tablicz[s-1]];
+				l = tab[tablicz[s - 1] + 1];
+			}
+			cout << wyraz.substr(g, l-g)<<"\n";
+		}
+		else {
+			tabdlu[10000] = {};
+			string h="";
+			long long int j = 10000000000000;
+			for (long long int u=0; u < s; u++) {
+				long long int g, l;
+				g = tab[tablicz[u]];
+				l = tab[tablicz[u]+1];
+				if (h == "") {
+					h = wyraz.substr(g, l - g);
+				}
+				if (wyraz.substr(g, l-g) < h) {
+					h = wyraz.substr(g, l-g);
+					j = wyraz.substr(g, l-g).length();
+				}
+			}
+			cout << h<<"\n";
+		}
+	}
+}
+
+*/
+#include <iostream>
+#include <string>
+#include <vector>
+#include <algorithm>
+
+using namespace std;
+
+int main() {
+	int n, m;
+	vector<string> database;
+
+	cin >> n;
+	for (int i = 0; i < n; i++) {
+		string word;
+		cin >> word;
+		database.push_back(word);
+	}
+
+	sort(database.begin(), database.end());
+
+	cin >> m;
+	for (int i = 0; i < m; i++) {
+		string query;
+		cin >> query;
+
+		auto it = lower_bound(database.begin(), database.end(), query);
+
+		if (it != database.end() && it->substr(0, query.size()) == query) {
+			cout << *it << endl;
+		}
+		else {
+			cout << "Pomidor" << endl;
+		}
+	}
+
+	return 0;
+}
