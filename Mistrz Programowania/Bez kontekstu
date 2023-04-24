@@ -1,0 +1,109 @@
+/*
+#include <iostream>
+#include<string>
+#include<algorithm>
+#include <vector>
+using namespace std;
+
+bool anagra(string str1, string str2) {
+    int count1[26] = { 0 };
+    int count2[26] = { 0 };
+    for (int i = 0; i < str1.length(); i++) {
+        count1[str1[i] - 'a']++;
+    }
+    for (int i = 0; i < str2.length(); i++) {
+        count2[str2[i] - 'a']++;
+    }
+    for (int i = 0; i < 26; i++) {
+        if (count1[i] != count2[i]) {
+            return false;
+        }
+    }
+
+    return true;
+}
+
+int main() {
+    int ciagdl, wyrazdl, punkty = 0, i = 0;
+    string ciag, wyraz, malyciag = "";
+    scanf_s("%d", &ciagdl);
+    scanf_s("%d", &wyrazdl);
+    cin >> ciag >> wyraz;
+    vector<int> tab;
+    int o = ciagdl - wyrazdl + 1;
+    while (i != o) {
+        malyciag = ciag.substr(i, wyrazdl);
+        if (anagra(malyciag,wyraz)) {
+            tab.push_back(i + 1);
+        }
+        i++;
+    }
+    cout << tab.size() << endl;
+    for (auto pos : tab) {
+        printf("%d", pos);
+        printf(" ");
+    }
+
+}
+    for (int z = 0; z < o; z++) {
+        int count1[26] = {};
+        int count2[26] = {};
+        for (int i = 0; i < wyrazdl; i++) {
+            count1[ciag[z + i] - 'a']++;
+            count2[wyraz[i] - 'a']++;
+        }
+        for (int i = 0; i < 26; i++) {
+            cout << count1[i];
+        }
+        cout << " ";
+        for (int i = 0; i < 26; i++) {
+            cout << count2[i];
+        }
+        cout << endl;
+
+        if (count1 == count2) {
+            *tabend = z + 1;
+            tabend++;
+        }
+    }
+*/
+#include <iostream>
+#include <cstring>
+#include <algorithm>
+using namespace std;
+
+int main() {
+    ios_base::sync_with_stdio(0);
+    cin.tie(0);
+    cout.tie(0);
+    int n, m;
+    cin >> n >> m;
+    string s, t,wyn="";
+    cin >> s >> t;
+
+    int k = 0;
+    int freq_t[26] = { 0 };
+    int freq_s[26] = { 0 };
+    for (int i = 0; i < m; i++) {
+        freq_t[t[i] - 'a']++;
+    }
+    for (int i = 0; i < m; i++) {
+        freq_s[s[i] - 'a']++;
+    }
+    if (memcmp(freq_t, freq_s, 26 * sizeof(int)) == 0) {
+        k++;
+        wyn+= "1 ";
+    }
+    for (int i = m; i < n; i++) {
+        freq_s[s[i - m] - 'a']--;
+        freq_s[s[i] - 'a']++;
+        if (memcmp(freq_t, freq_s, 26 * sizeof(int)) == 0) {
+            k++;
+            wyn+=i - m + 2+48;
+            wyn += " ";
+        }
+    }
+    cout << k << "\n";
+    cout << wyn;
+    return 0;
+}
