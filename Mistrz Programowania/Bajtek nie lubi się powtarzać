@@ -1,0 +1,55 @@
+#include <iostream>
+#include <string>
+#include <algorithm>
+#include <vector>
+
+using namespace std;
+
+int repeatability(string s) {
+    int n = s.size();
+    vector<int> pi(n);
+    for (int i = 1; i < n; i++) {
+        int j = pi[i - 1];
+        while (j > 0 && s[i] != s[j]) {
+            j = pi[j - 1];
+        }
+        if (s[i] == s[j]) {
+            j++;
+        }
+        pi[i] = j;
+    }
+    int res = 0;
+    for (int i = 1; i < n; i++) {
+        res = max(res, pi[i]);
+    }
+    return res;
+}
+
+int main() {
+    int t;
+    cin >> t;
+    while (t--) {
+        string s;
+        cin >> s;
+        sort(s.begin(), s.end());
+        int r = repeatability(s);
+        do {
+            int r2 = repeatability(s);
+            if (r2 < r) {
+                r = r2;
+            }
+        } while (next_permutation(s.begin(), s.end()));
+        string res;
+        for (int i = 0; i < s.size(); i++) {
+            res += s[i];
+            if (i + 1 == s.size() || s[i + 1] != s[i]) {
+                r--;
+            }
+            if (r == 0) {
+                break;
+            }
+        }
+        cout << res << endl;
+    }
+    return 0;
+}
